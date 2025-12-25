@@ -38,7 +38,7 @@ variable "aks_kubernetes_version" {
 
 variable "aks_node_vm_size" {
   type    = string
-  default = "Standard_D4s_v5"
+  default = "Standard_D2s_v3"
 }
 
 variable "aks_node_count" {
@@ -56,4 +56,9 @@ variable "traefik_ilb_static_ip" {
   type        = string
   description = "Optional private IP in AKS subnet for the internal LB. Leave empty for dynamic."
   default     = ""
+}
+
+variable "subscription_id" {
+  type        = string
+  description = "Azure subscription ID to deploy into"
 }

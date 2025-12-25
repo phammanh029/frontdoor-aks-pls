@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "gateway" {
+resource "kubernetes_namespace_v1" "gateway" {
   metadata {
     name = "traefik"
   }
@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "gateway" {
 
 resource "helm_release" "traefik" {
   name       = "traefik"
-  namespace  = kubernetes_namespace.gateway.metadata[0].name
+  namespace  = kubernetes_namespace_v1.gateway.metadata[0].name
   repository = "https://traefik.github.io/charts"
   chart      = "traefik"
   version    = local.traefik_config.version
@@ -20,7 +20,7 @@ resource "helm_release" "traefik" {
   timeout          = 900
   create_namespace = false
 
-  depends_on = [kubernetes_namespace.gateway]
+  depends_on = [kubernetes_namespace_v1.gateway]
 }
 
 # Read the AKS-created Private Link Service (created by the Service annotation)
@@ -35,7 +35,7 @@ data "azurerm_private_link_service" "gateway_pls" {
 data "kubernetes_resources" "traefik_service" {
   api_version    = "v1"
   kind           = "Service"
-  namespace      = kubernetes_namespace.gateway.metadata[0].name
+  namespace      = kubernetes_namespace_v1.gateway.metadata[0].name
   label_selector = "app.kubernetes.io/name=traefik"
 
   depends_on = [helm_release.traefik]

@@ -3,7 +3,7 @@ location    = "westeurope"
 
 name_prefix = "manhp-poc"
 
-dns_zone_rg   = "rg-dns-codeleap"   # <-- change to your DNS RG
+dns_zone_rg   = "rg-codeleap-dns-zone"
 dns_zone_name = "az.codeleap.net"
 subdomain     = "manhp"
 
