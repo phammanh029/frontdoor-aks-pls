@@ -65,6 +65,27 @@ resource "azurerm_cdn_frontdoor_custom_domain" "poc" {
   }
 }
 
+resource "azurerm_dns_txt_record" "poc" {
+  name                = "_dnsauth.${var.subdomain}.${var.dns_zone_name}"
+  zone_name           = data.azurerm_dns_zone.zone.name
+  resource_group_name = var.dns_zone_rg
+  ttl                 = 3600
+
+  record {
+    value = azurerm_cdn_frontdoor_custom_domain.poc.validation_token
+  }
+}
+
+resource "azurerm_dns_cname_record" "poc" {
+  depends_on = [azurerm_cdn_frontdoor_route.poc]
+
+  name                = "manhp"
+  zone_name           = data.azurerm_dns_zone.zone.name
+  resource_group_name = var.dns_zone_rg
+  ttl                 = 3600
+  record              = azurerm_cdn_frontdoor_endpoint.poc.host_name
+}
+
 resource "azurerm_cdn_frontdoor_route" "poc" {
   name                          = "gateway"
   cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.poc.id

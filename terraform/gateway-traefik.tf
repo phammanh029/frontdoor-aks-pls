@@ -16,7 +16,8 @@ resource "helm_release" "traefik" {
 
   # PoC-friendly
   atomic           = true
-  cleanup_on_fail  = true
+  cleanup_on_fail  = false
+  # timeout after 15 minutes
   timeout          = 900
   create_namespace = false
 

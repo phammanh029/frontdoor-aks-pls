@@ -43,7 +43,7 @@ variable "aks_node_vm_size" {
 
 variable "aks_node_count" {
   type    = number
-  default = 2
+  default = 1
 }
 
 variable "is_production_grade_environment" {
@@ -62,3 +62,4 @@ variable "subscription_id" {
   type        = string
   description = "Azure subscription ID to deploy into"
 }
+

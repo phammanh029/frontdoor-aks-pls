@@ -23,7 +23,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count           = var.aks_node_count
     vnet_subnet_id       = azurerm_subnet.aks.id
     orchestrator_version = var.aks_kubernetes_version
-    max_count            = 1
+    upgrade_settings {
+      drain_timeout_in_minutes      = 0
+      max_surge                     = "10%"
+      node_soak_duration_in_minutes = 0
+    }
   }
 
   tags = local.tags
