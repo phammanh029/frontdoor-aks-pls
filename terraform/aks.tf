@@ -23,6 +23,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count           = var.aks_node_count
     vnet_subnet_id       = azurerm_subnet.aks.id
     orchestrator_version = var.aks_kubernetes_version
+    max_count            = 1
   }
 
   tags = local.tags

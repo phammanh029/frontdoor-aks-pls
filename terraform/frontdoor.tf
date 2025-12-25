@@ -1,7 +1,7 @@
 resource "azurerm_cdn_frontdoor_profile" "poc" {
   name                = "${var.name_prefix}-afd-${var.environment}"
   resource_group_name = azurerm_resource_group.rg.name
-  sku_name            = "Standard_AzureFrontDoor"
+  sku_name            = "Premium_AzureFrontDoor"
   tags                = local.tags
 }
 
