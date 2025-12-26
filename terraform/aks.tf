@@ -32,3 +32,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   tags = local.tags
 }
+
+# grant network contributor to the AKS managed identity on the RG containing the VNet
+resource "azurerm_role_assignment" "aks_network_contributor" {
+  scope                = azurerm_resource_group.rg.id
+  role_definition_name = "Network Contributor"
+  principal_id         = azurerm_kubernetes_cluster.aks.identity[0].principal_id
+}

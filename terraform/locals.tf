@@ -21,6 +21,7 @@ locals {
     "service.beta.kubernetes.io/azure-pls-create"                                 = "true"
     "service.beta.kubernetes.io/azure-pls-name"                                   = "gateway-pls-${var.environment}"
     "service.beta.kubernetes.io/azure-pls-ip-configuration-subnet"                = "private-link"
+    "service.beta.kubernetes.io/azure-pls-resource-group"                         = local.rg_name
     "service.beta.kubernetes.io/azure-pls-ip-configuration-ip-address-count"      = 1
     "service.beta.kubernetes.io/azure-pls-proxy-protocol"                         = "false"
     "service.beta.kubernetes.io/azure-pls-visibility"                             = "*"

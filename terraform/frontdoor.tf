@@ -66,7 +66,7 @@ resource "azurerm_cdn_frontdoor_custom_domain" "poc" {
 }
 
 resource "azurerm_dns_txt_record" "poc" {
-  name                = "_dnsauth.${var.subdomain}.${var.dns_zone_name}"
+  name                = "_dnsauth.${var.subdomain}"
   zone_name           = data.azurerm_dns_zone.zone.name
   resource_group_name = var.dns_zone_rg
   ttl                 = 3600
