@@ -55,6 +55,7 @@ variable "is_production_grade_environment" {
 variable "traefik_ilb_static_ip" {
   type        = string
   description = "Optional private IP in AKS subnet for the internal LB. Leave empty for dynamic."
+  # default     = "10.50.1.32"
   default     = ""
 }
 

@@ -37,16 +37,16 @@ locals {
   )
 
   helm_values = {
-    # resources = {
-    #   limits = {
-    #     cpu    = "500m"
-    #     memory = "1Gi"
-    #   }
-    #   requests = {
-    #     cpu    = "250m"
-    #     memory = "512Mi"
-    #   }
-    # }
+    resources = {
+      limits = {
+        cpu    = "500m"
+        memory = "1Gi"
+      }
+      requests = {
+        cpu    = "250m"
+        memory = "512Mi"
+      }
+    }
 
     ports = {
       websecure = {

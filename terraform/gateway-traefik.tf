@@ -27,7 +27,7 @@ resource "helm_release" "traefik" {
 # Read the AKS-created Private Link Service (created by the Service annotation)
 data "azurerm_private_link_service" "gateway_pls" {
   name                = "gateway-pls-${var.environment}"
-  resource_group_name = azurerm_kubernetes_cluster.aks.node_resource_group
+  resource_group_name = azurerm_resource_group.rg.name
 
   depends_on = [helm_release.traefik]
 }

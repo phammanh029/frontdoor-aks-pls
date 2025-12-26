@@ -44,7 +44,7 @@ resource "azurerm_cdn_frontdoor_origin" "poc" {
   https_port = 443
 
   # PoC: internal LB usually won't have a cert matching this hostname.
-  certificate_name_check_enabled = false
+  certificate_name_check_enabled = true
 
   private_link {
     private_link_target_id = data.azurerm_private_link_service.gateway_pls.id
@@ -65,6 +65,11 @@ resource "azurerm_cdn_frontdoor_custom_domain" "poc" {
   }
 }
 
+resource "azurerm_cdn_frontdoor_custom_domain_association" "poc" {
+  cdn_frontdoor_custom_domain_id = azurerm_cdn_frontdoor_custom_domain.poc.id
+  cdn_frontdoor_route_ids        = [azurerm_cdn_frontdoor_route.poc.id]
+}
+
 resource "azurerm_dns_txt_record" "poc" {
   name                = "_dnsauth.${var.subdomain}"
   zone_name           = data.azurerm_dns_zone.zone.name
@@ -74,16 +79,6 @@ resource "azurerm_dns_txt_record" "poc" {
   record {
     value = azurerm_cdn_frontdoor_custom_domain.poc.validation_token
   }
-}
-
-resource "azurerm_dns_cname_record" "poc" {
-  depends_on = [azurerm_cdn_frontdoor_route.poc]
-
-  name                = "manhp"
-  zone_name           = data.azurerm_dns_zone.zone.name
-  resource_group_name = var.dns_zone_rg
-  ttl                 = 3600
-  record              = azurerm_cdn_frontdoor_endpoint.poc.host_name
 }
 
 resource "azurerm_cdn_frontdoor_route" "poc" {
